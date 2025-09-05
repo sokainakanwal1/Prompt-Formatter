@@ -1,50 +1,20 @@
 import { useState } from "react";
-import { useMutation } from "@tanstack/react-query";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { apiRequest } from "@/lib/queryClient";
-import { Wand2, Lightbulb, Copy, Check, Loader2, PenTool, CheckCircle, Sparkles } from "lucide-react";
-import type { FormatPromptRequest, FormatPromptResponse } from "@shared/schema";
+import { apiService } from "@/lib/api";
+import { Wand2, Lightbulb, Copy, Check, Loader2, CheckCircle, Sparkles } from "lucide-react";
+import type { FormatPromptRequest } from "@/types/api";
 
 export default function PromptFormatter() {
   const [inputPrompt, setInputPrompt] = useState("");
   const [formattedResult, setFormattedResult] = useState("");
   const [copied, setCopied] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
 
-  const formatMutation = useMutation({
-    mutationFn: async (prompt: string): Promise<FormatPromptResponse> => {
-      const payload: FormatPromptRequest = { prompt };
-      const response = await apiRequest("POST", "/api/format", payload);
-      return response.json();
-    },
-    onSuccess: (data) => {
-      if (data.success) {
-        setFormattedResult(data.formattedPrompt);
-        toast({
-          title: "Prompt formatted successfully!",
-          description: "Your optimized prompt is ready to use.",
-        });
-      } else {
-        toast({
-          title: "Format failed",
-          description: data.error || "Please try again.",
-          variant: "destructive",
-        });
-      }
-    },
-    onError: (error) => {
-      toast({
-        title: "Error formatting prompt",
-        description: error instanceof Error ? error.message : "Please try again.",
-        variant: "destructive",
-      });
-    },
-  });
-
-  const handleFormat = () => {
+  const handleFormat = async () => {
     if (!inputPrompt.trim()) {
       toast({
         title: "Please enter a prompt",
@@ -53,7 +23,36 @@ export default function PromptFormatter() {
       });
       return;
     }
-    formatMutation.mutate(inputPrompt);
+
+    setIsLoading(true);
+    
+    try {
+      const payload: FormatPromptRequest = { prompt: inputPrompt };
+      const response = await apiService.formatPrompt(payload);
+      
+      if (response.success) {
+        setFormattedResult(response.formattedPrompt);
+        toast({
+          title: "Prompt formatted successfully!",
+          description: "Your optimized prompt is ready to use.",
+        });
+      } else {
+        toast({
+          title: "Format failed",
+          description: response.error || "Please try again.",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      console.error('Formatting error:', error);
+      toast({
+        title: "Error formatting prompt",
+        description: error instanceof Error ? error.message : "Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const loadExample = () => {
@@ -117,11 +116,11 @@ export default function PromptFormatter() {
       <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
         <Button
           onClick={handleFormat}
-          disabled={formatMutation.isPending || !inputPrompt.trim()}
+          disabled={isLoading || !inputPrompt.trim()}
           className="flex-1 bg-gradient-to-r from-purple-600 to-pink-600 text-white py-4 sm:py-5 text-lg sm:text-xl font-bold hover:from-purple-700 hover:to-pink-700 transition-all duration-200 hover:scale-105 shadow-2xl hover:shadow-purple-500/25 rounded-2xl"
           data-testid="button-format"
         >
-          {formatMutation.isPending ? (
+          {isLoading ? (
             <>
               <Loader2 className="mr-3 h-5 w-5 sm:h-6 sm:w-6 animate-spin" />
               <span>AI is working...</span>

@@ -1,12 +1,19 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { GoogleGenAI } from "@google/genai";
-import { formatPromptSchema, type FormatPromptResponse } from '../shared/schema';
 
-const ai = new GoogleGenAI({ 
-  apiKey: process.env.GOOGLE_GEMINI_KEY || process.env.GEMINI_API_KEY || "" 
-});
+// Define types inline to avoid import issues
+interface FormatPromptResponse {
+  formattedPrompt: string;
+  success: boolean;
+  error?: string;
+}
 
+// Gemini logic embedded directly
 async function formatPrompt(originalPrompt: string): Promise<string> {
+  const ai = new GoogleGenAI({ 
+    apiKey: process.env.GOOGLE_GEMINI_KEY || process.env.GEMINI_API_KEY || "" 
+  });
+
   try {
     const systemPrompt = `Act like a professional prompt formatter. You specialize in rewriting prompts for ChatGPT to make them clearer, structured, and more effective.
 
@@ -24,7 +31,7 @@ Follow these steps:
 Output: Return ONLY the upgraded prompt inside a code block, without explanations or extra text.`;
 
     const response = await ai.models.generateContent({
-      model: "gemini-2.5-flash",
+      model: "gemini-1.5-flash", // Using more stable model name
       config: {
         systemInstruction: systemPrompt,
         temperature: 0.3,
@@ -54,21 +61,71 @@ export default async function handler(
   req: VercelRequest,
   res: VercelResponse,
 ) {
+  // Add CORS headers
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
   try {
-    const { prompt } = formatPromptSchema.parse(req.body);
+    // Validate API key
+    if (!process.env.GOOGLE_GEMINI_KEY && !process.env.GEMINI_API_KEY) {
+      console.error('Missing Gemini API key');
+      return res.status(500).json({
+        formattedPrompt: "",
+        success: false,
+        error: "Server configuration error"
+      });
+    }
+
+    // Validate request body
+    if (!req.body || typeof req.body !== 'object') {
+      return res.status(400).json({
+        formattedPrompt: "",
+        success: false,
+        error: "Invalid request body"
+      });
+    }
     
-    const formattedPrompt = await formatPrompt(prompt);
+    if (!req.body.prompt || typeof req.body.prompt !== 'string') {
+      return res.status(400).json({
+        formattedPrompt: "",
+        success: false,
+        error: "Prompt is required and must be a string"
+      });
+    }
+    
+    if (req.body.prompt.length === 0) {
+      return res.status(400).json({
+        formattedPrompt: "",
+        success: false,
+        error: "Prompt cannot be empty"
+      });
+    }
+    
+    if (req.body.prompt.length > 5000) {
+      return res.status(400).json({
+        formattedPrompt: "",
+        success: false,
+        error: "Prompt too long (max 5000 characters)"
+      });
+    }
+
+    const formattedPrompt = await formatPrompt(req.body.prompt);
     
     const response: FormatPromptResponse = {
       formattedPrompt,
       success: true,
     };
     
-    res.json(response);
+    return res.json(response);
   } catch (error) {
     console.error("Format error:", error);
     
@@ -78,6 +135,6 @@ export default async function handler(
       error: error instanceof Error ? error.message : "An unexpected error occurred",
     };
     
-    res.status(500).json(response);
+    return res.status(500).json(response);
   }
 }
