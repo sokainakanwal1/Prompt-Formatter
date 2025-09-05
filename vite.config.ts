@@ -34,4 +34,5 @@ export default defineConfig({
       deny: ["**/.*"],
     },
   },
+  base: "/", // Important for Vercel static hosting
 });
