@@ -1,0 +1,790 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prompt Formatter & Expander - Free ChatGPT Prompt Optimizer</title>
+    <meta name="description" content="Free prompt formatter and expander. Paste any messy prompt, get a structured ChatGPT or Gemini-ready version instantly. No sign-up.">
+    <link rel="canonical" href="https://promptfmt.com/">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Prompt Formatter & Expander - Free ChatGPT Prompt Optimizer">
+    <meta property="og:description" content="Free prompt formatter and expander. Paste any messy prompt, get a structured ChatGPT or Gemini-ready version instantly. No sign-up.">
+    <meta property="og:image" content="https://promptfmt.com/api/og">
+    <meta property="og:url" content="https://promptfmt.com/">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Prompt Formatter & Expander - Free ChatGPT Prompt Optimizer">
+    <meta name="twitter:description" content="Free prompt formatter and expander. Paste any messy prompt, get a structured ChatGPT or Gemini-ready version instantly. No sign-up.">
+    <meta name="twitter:image" content="https://promptfmt.com/api/og">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://kit.fontawesome.com/your-kit-id.js" crossorigin="anonymous"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    borderRadius: {
+                        lg: "var(--radius)",
+                        md: "calc(var(--radius) - 2px)",
+                        sm: "calc(var(--radius) - 4px)",
+                    },
+                    colors: {
+                        background: "var(--background)",
+                        foreground: "var(--foreground)",
+                        card: {
+                            DEFAULT: "var(--card)",
+                            foreground: "var(--card-foreground)",
+                        },
+                        popover: {
+                            DEFAULT: "var(--popover)",
+                            foreground: "var(--popover-foreground)",
+                        },
+                        primary: {
+                            DEFAULT: "var(--primary)",
+                            foreground: "var(--primary-foreground)",
+                        },
+                        secondary: {
+                            DEFAULT: "var(--secondary)",
+                            foreground: "var(--secondary-foreground)",
+                        },
+                        muted: {
+                            DEFAULT: "var(--muted)",
+                            foreground: "var(--muted-foreground)",
+                        },
+                        accent: {
+                            DEFAULT: "var(--accent)",
+                            foreground: "var(--accent-foreground)",
+                        },
+                        destructive: {
+                            DEFAULT: "var(--destructive)",
+                            foreground: "var(--destructive-foreground)",
+                        },
+                        border: "var(--border)",
+                        input: "var(--input)",
+                        ring: "var(--ring)",
+                        chart: {
+                            "1": "var(--chart-1)",
+                            "2": "var(--chart-2)",
+                            "3": "var(--chart-3)",
+                            "4": "var(--chart-4)",
+                            "5": "var(--chart-5)",
+                        }
+                    },
+                    fontFamily: {
+                        sans: ["Inter", "system-ui", "sans-serif"],
+                    }
+                },
+            }
+        };
+    </script>
+    
+    <style>
+        :root {
+            --background: hsl(0 0% 98%);
+            --foreground: hsl(240 10% 15%);
+            --card: hsl(0 0% 100%);
+            --card-foreground: hsl(240 10% 15%);
+            --popover: hsl(0 0% 100%);
+            --popover-foreground: hsl(240 10% 15%);
+            --primary: hsl(221 83% 53%);
+            --primary-foreground: hsl(0 0% 98%);
+            --secondary: hsl(215 20% 65%);
+            --secondary-foreground: hsl(240 10% 15%);
+            --muted: hsl(210 40% 96%);
+            --muted-foreground: hsl(240 5% 45%);
+            --accent: hsl(210 40% 96%);
+            --accent-foreground: hsl(240 10% 15%);
+            --destructive: hsl(0 84% 60%);
+            --destructive-foreground: hsl(0 0% 98%);
+            --border: hsl(220 13% 91%);
+            --input: hsl(220 13% 91%);
+            --ring: hsl(221 83% 53%);
+            --radius: 8px;
+            --chart-1: hsl(142 76% 36%);
+            --chart-2: hsl(346 77% 60%);
+            --chart-3: hsl(47 96% 53%);
+            --chart-4: hsl(280 87% 47%);
+            --chart-5: hsl(12 76% 61%);
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, hsl(221 83% 53%) 0%, hsl(262 83% 58%) 100%);
+        }
+        
+        .prose-max {
+            max-width: 65ch;
+        }
+    </style>
+
+    <!-- JSON-LD FAQPage Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "What is a prompt formatter?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "A prompt formatter is a tool that transforms messy, unclear prompts into well-structured, effective instructions for AI models like ChatGPT and Gemini. It helps improve prompt clarity and response quality."
+                }
+            },
+            {
+                "@type": "Question", 
+                "name": "How does this prompt expander work?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Our prompt expander analyzes your input and adds context, structure, and clarity to create optimized prompts. It uses AI to identify missing elements and suggests improvements for better results."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Is this prompt optimizer free?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes! Our prompt optimizer is completely free with no usage limits, sign-up requirements, or paywalls. We believe everyone should have access to better prompt formatting tools."
+                }
+            }
+        ]
+    }
+    </script>
+</head>
+<body class="bg-background text-foreground antialiased">
+    <!-- @COMPONENT: Header [navigation with anchor links] -->
+    <header class="sticky top-0 z-50 bg-background/95 backdrop-blur border-b border-border">
+        <div class="container mx-auto px-4 py-4 max-w-6xl">
+            <nav class="flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-magic text-primary text-xl"></i>
+                    <span class="text-xl font-semibold text-foreground">PromptFmt</span>
+                </div>
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="#format" class="text-muted-foreground hover:text-primary transition-colors">Prompt Formatter Tool</a>
+                    <a href="#expand" class="text-muted-foreground hover:text-primary transition-colors">Prompt Expander Online</a>
+                    <a href="#optimize" class="text-muted-foreground hover:text-primary transition-colors">AI Prompt Optimizer</a>
+                    <a href="#faq" class="text-muted-foreground hover:text-primary transition-colors">Prompt Formatter FAQ</a>
+                </div>
+                <button class="md:hidden">
+                    <i class="fas fa-bars text-foreground"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+    <!-- @END_COMPONENT: Header -->
+
+    <main class="min-h-screen">
+        <!-- @COMPONENT: Hero Section [main formatter interface] -->
+        <section id="format" class="py-12 lg:py-20">
+            <div class="container mx-auto px-4 max-w-6xl">
+                <div class="grid lg:grid-cols-3 gap-8">
+                    <!-- Main Content Area -->
+                    <div class="lg:col-span-2">
+                        <div class="text-center mb-12">
+                            <h1 class="text-4xl lg:text-5xl font-bold text-foreground mb-4">
+                                Prompt Formatter & Expander
+                            </h1>
+                            <p class="text-xl text-muted-foreground mb-8 prose-max mx-auto">
+                                Transform any messy prompt into a structured, professional format for ChatGPT, Gemini, or any AI model. 
+                                Our <strong>prompt formatter</strong> helps you <strong>format prompt</strong> text with clarity and precision. 
+                                This <strong>prompt expander</strong> works <strong>online</strong> instantly with no sign-up required.
+                            </p>
+                        </div>
+
+                        <!-- AdSense Slot 1: Hero Banner -->
+                        <!-- @COMPONENT: AdSlot [responsive display unit] -->
+                        <div class="mb-8 bg-muted/50 border border-border rounded-lg p-4 text-center">
+                            <div class="text-muted-foreground text-sm mb-2">Advertisement</div>
+                            <div class="h-24 md:h-32 bg-gradient-to-r from-muted to-accent rounded flex items-center justify-center">
+                                <span class="text-muted-foreground" data-mock="true">
+                                    AdSense Hero Banner (NEXT_PUBLIC_ADSENSE_SLOT_1)
+                                </span>
+                            </div>
+                        </div>
+                        <!-- @END_COMPONENT: AdSlot -->
+
+                        <!-- @COMPONENT: PromptBox [main formatter interface] -->
+                        <div class="bg-card border border-border rounded-xl p-6 shadow-sm">
+                            <div class="space-y-6">
+                                <!-- Input Section -->
+                                <div>
+                                    <label for="original-prompt" class="block text-sm font-medium text-foreground mb-2">
+                                        Original Prompt <span class="text-muted-foreground">(paste your messy prompt here)</span>
+                                    </label>
+                                    <textarea 
+                                        id="original-prompt"
+                                        data-bind="inputPrompt"
+                                        class="w-full h-32 p-4 border border-input bg-background rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-ring text-foreground placeholder:text-muted-foreground"
+                                        placeholder="Example: help me write better emails for my business i want them to be more professional and get better responses from clients"
+                                        data-mock="true"
+                                    ></textarea>
+                                </div>
+
+                                <!-- Action Buttons -->
+                                <div class="flex flex-col sm:flex-row gap-3">
+                                    <button 
+                                        data-event="click:handleFormat"
+                                        data-implementation="Should validate input and call Gemini API"
+                                        class="flex-1 gradient-bg text-primary-foreground px-6 py-3 rounded-lg font-medium hover:opacity-90 transition-opacity focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+                                    >
+                                        <i class="fas fa-magic mr-2"></i>
+                                        Format Prompt
+                                    </button>
+                                    <button 
+                                        data-event="click:loadExample"
+                                        data-implementation="Should load pre-filled example prompt"
+                                        class="sm:w-auto bg-secondary text-secondary-foreground px-6 py-3 rounded-lg font-medium hover:bg-secondary/80 transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+                                    >
+                                        <i class="fas fa-lightbulb mr-2"></i>
+                                        Try Example
+                                    </button>
+                                </div>
+
+                                <!-- @STATE: isLoading:boolean = false -->
+                                <!-- @STATE: formattedResult:string = "" -->
+                                
+                                <!-- Results Section -->
+                                <div class="space-y-4" data-bind="formattedResult" data-mock="true">
+                                    <div class="flex items-center justify-between">
+                                        <label class="block text-sm font-medium text-foreground">
+                                            Formatted Prompt <span class="text-accent">(AI-Optimized)</span>
+                                        </label>
+                                        <button 
+                                            data-event="click:copyToClipboard"
+                                            data-implementation="Should copy formatted text to clipboard"
+                                            class="text-sm bg-accent text-accent-foreground px-3 py-1 rounded-md hover:bg-accent/80 transition-colors"
+                                        >
+                                            <i class="fas fa-copy mr-1"></i>
+                                            Copy
+                                        </button>
+                                    </div>
+                                    <div class="bg-muted border border-border rounded-lg p-4">
+                                        <div class="font-mono text-sm text-muted-foreground leading-relaxed">
+                                            <div class="text-accent font-medium mb-2">Example Formatted Output:</div>
+                                            <div data-mock="true">
+                                                <strong>Role:</strong> You are an expert business communication consultant.<br><br>
+                                                <strong>Task:</strong> Help me create professional email templates that generate better client responses.<br><br>
+                                                <strong>Context:</strong> I'm a business owner who needs to improve email communication with clients to increase response rates and maintain professionalism.<br><br>
+                                                <strong>Requirements:</strong><br>
+                                                • Create templates for common business scenarios<br>
+                                                • Focus on clear, actionable language<br>
+                                                • Include proper greeting and closing elements<br>
+                                                • Optimize for mobile reading<br><br>
+                                                <strong>Output Format:</strong> Provide 3-5 email templates with subject lines and explain why each element improves response rates.<br><br>
+                                                Take a deep breath and work on this problem step-by-step.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- @END_COMPONENT: PromptBox -->
+
+                        <!-- How-to Section -->
+                        <section id="expand" class="mt-16">
+                            <h2 class="text-3xl font-semibold text-foreground mb-6">How to Format a Prompt for ChatGPT</h2>
+                            <div class="grid md:grid-cols-2 gap-8">
+                                <div class="bg-card border border-border rounded-lg p-6">
+                                    <div class="flex items-start space-x-3">
+                                        <div class="w-8 h-8 bg-destructive text-destructive-foreground rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                                            <i class="fas fa-times text-sm"></i>
+                                        </div>
+                                        <div>
+                                            <h3 class="font-medium text-foreground mb-2">Before: Messy Prompt</h3>
+                                            <div class="bg-muted p-3 rounded text-sm text-muted-foreground font-mono">
+                                                help me write better emails for my business i want them to be more professional and get better responses from clients
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bg-card border border-border rounded-lg p-6">
+                                    <div class="flex items-start space-x-3">
+                                        <div class="w-8 h-8 bg-chart-1 text-primary-foreground rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                                            <i class="fas fa-check text-sm"></i>
+                                        </div>
+                                        <div>
+                                            <h3 class="font-medium text-foreground mb-2">After: Structured Format</h3>
+                                            <div class="bg-muted p-3 rounded text-sm text-muted-foreground font-mono">
+                                                <strong>Role:</strong> Business communication expert<br>
+                                                <strong>Task:</strong> Create professional email templates<br>
+                                                <strong>Context:</strong> Improving client responses...
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mt-8 grid md:grid-cols-3 gap-6">
+                                <div class="text-center">
+                                    <div class="w-12 h-12 bg-primary text-primary-foreground rounded-full flex items-center justify-center mx-auto mb-4">
+                                        <i class="fas fa-paste text-lg"></i>
+                                    </div>
+                                    <h3 class="font-medium text-foreground mb-2">1. Paste Your Prompt</h3>
+                                    <p class="text-sm text-muted-foreground">Copy any messy or unclear prompt into the formatter</p>
+                                </div>
+                                <div class="text-center">
+                                    <div class="w-12 h-12 bg-primary text-primary-foreground rounded-full flex items-center justify-center mx-auto mb-4">
+                                        <i class="fas fa-magic text-lg"></i>
+                                    </div>
+                                    <h3 class="font-medium text-foreground mb-2">2. AI Processing</h3>
+                                    <p class="text-sm text-muted-foreground">Our AI analyzes and restructures your prompt</p>
+                                </div>
+                                <div class="text-center">
+                                    <div class="w-12 h-12 bg-primary text-primary-foreground rounded-full flex items-center justify-center mx-auto mb-4">
+                                        <i class="fas fa-copy text-lg"></i>
+                                    </div>
+                                    <h3 class="font-medium text-foreground mb-2">3. Copy & Use</h3>
+                                    <p class="text-sm text-muted-foreground">Get your optimized prompt ready for any AI</p>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- Optimizer Section -->
+                        <section id="optimize" class="mt-16">
+                            <h2 class="text-3xl font-semibold text-foreground mb-6">AI Prompt Optimizer in One Click</h2>
+                            <div class="bg-card border border-border rounded-lg p-6">
+                                <div class="grid md:grid-cols-2 gap-8 items-center">
+                                    <div>
+                                        <h3 class="text-xl font-medium text-foreground mb-4">Why Use Our Prompt Optimizer?</h3>
+                                        <ul class="space-y-3 text-muted-foreground">
+                                            <li class="flex items-start space-x-3">
+                                                <i class="fas fa-check text-chart-1 mt-1"></i>
+                                                <span><strong>Better AI Responses:</strong> Structured prompts get 3x better results</span>
+                                            </li>
+                                            <li class="flex items-start space-x-3">
+                                                <i class="fas fa-check text-chart-1 mt-1"></i>
+                                                <span><strong>Time Saving:</strong> No more trial and error with prompt writing</span>
+                                            </li>
+                                            <li class="flex items-start space-x-3">
+                                                <i class="fas fa-check text-chart-1 mt-1"></i>
+                                                <span><strong>Professional Quality:</strong> Enterprise-level prompt engineering</span>
+                                            </li>
+                                            <li class="flex items-start space-x-3">
+                                                <i class="fas fa-check text-chart-1 mt-1"></i>
+                                                <span><strong>100% Free:</strong> No limits, no sign-up, no hidden costs</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <!-- Before/after example image placeholder -->
+                                    <div class="bg-muted rounded-lg p-6 text-center">
+                                        <!-- A split-screen comparison showing messy vs formatted prompts -->
+                                        <img 
+                                            src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400" 
+                                            alt="prompt formatter example before after"
+                                            class="rounded-lg w-full h-auto"
+                                            data-mock-image="true"
+                                            data-implementation="Replace with actual before/after screenshot"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- Template Generator Section -->
+                        <section class="mt-16">
+                            <h2 class="text-3xl font-semibold text-foreground mb-6">Free Prompt Template Generator</h2>
+                            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                <!-- Template Cards -->
+                                <div class="bg-card border border-border rounded-lg p-6 hover:shadow-md transition-shadow">
+                                    <i class="fas fa-briefcase text-primary text-2xl mb-3"></i>
+                                    <h3 class="font-medium text-foreground mb-2">Business Writing</h3>
+                                    <p class="text-sm text-muted-foreground mb-4">Professional emails, proposals, and reports</p>
+                                    <button class="text-primary hover:text-primary/80 text-sm font-medium" data-event="click:loadTemplate">
+                                        Use Template <i class="fas fa-arrow-right ml-1"></i>
+                                    </button>
+                                </div>
+                                <div class="bg-card border border-border rounded-lg p-6 hover:shadow-md transition-shadow">
+                                    <i class="fas fa-code text-primary text-2xl mb-3"></i>
+                                    <h3 class="font-medium text-foreground mb-2">Code Generation</h3>
+                                    <p class="text-sm text-muted-foreground mb-4">Programming tasks and technical documentation</p>
+                                    <button class="text-primary hover:text-primary/80 text-sm font-medium" data-event="click:loadTemplate">
+                                        Use Template <i class="fas fa-arrow-right ml-1"></i>
+                                    </button>
+                                </div>
+                                <div class="bg-card border border-border rounded-lg p-6 hover:shadow-md transition-shadow">
+                                    <i class="fas fa-graduation-cap text-primary text-2xl mb-3"></i>
+                                    <h3 class="font-medium text-foreground mb-2">Learning & Education</h3>
+                                    <p class="text-sm text-muted-foreground mb-4">Study guides, explanations, and tutorials</p>
+                                    <button class="text-primary hover:text-primary/80 text-sm font-medium" data-event="click:loadTemplate">
+                                        Use Template <i class="fas fa-arrow-right ml-1"></i>
+                                    </button>
+                                </div>
+                                <div class="bg-card border border-border rounded-lg p-6 hover:shadow-md transition-shadow">
+                                    <i class="fas fa-pen-fancy text-primary text-2xl mb-3"></i>
+                                    <h3 class="font-medium text-foreground mb-2">Creative Writing</h3>
+                                    <p class="text-sm text-muted-foreground mb-4">Stories, blog posts, and marketing copy</p>
+                                    <button class="text-primary hover:text-primary/80 text-sm font-medium" data-event="click:loadTemplate">
+                                        Use Template <i class="fas fa-arrow-right ml-1"></i>
+                                    </button>
+                                </div>
+                                <div class="bg-card border border-border rounded-lg p-6 hover:shadow-md transition-shadow">
+                                    <i class="fas fa-chart-line text-primary text-2xl mb-3"></i>
+                                    <h3 class="font-medium text-foreground mb-2">Data Analysis</h3>
+                                    <p class="text-sm text-muted-foreground mb-4">Research, analytics, and insights generation</p>
+                                    <button class="text-primary hover:text-primary/80 text-sm font-medium" data-event="click:loadTemplate">
+                                        Use Template <i class="fas fa-arrow-right ml-1"></i>
+                                    </button>
+                                </div>
+                                <div class="bg-card border border-border rounded-lg p-6 hover:shadow-md transition-shadow">
+                                    <i class="fas fa-users text-primary text-2xl mb-3"></i>
+                                    <h3 class="font-medium text-foreground mb-2">Personal Assistant</h3>
+                                    <p class="text-sm text-muted-foreground mb-4">Planning, organization, and productivity</p>
+                                    <button class="text-primary hover:text-primary/80 text-sm font-medium" data-event="click:loadTemplate">
+                                        Use Template <i class="fas fa-arrow-right ml-1"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+
+                    <!-- Sidebar (Desktop Only) -->
+                    <div class="hidden lg:block">
+                        <div class="sticky top-24">
+                            <!-- @COMPONENT: AdSlot [square sidebar unit] -->
+                            <div class="bg-muted/50 border border-border rounded-lg p-4 mb-6">
+                                <div class="text-muted-foreground text-sm mb-2">Advertisement</div>
+                                <div class="aspect-square bg-gradient-to-br from-accent to-secondary rounded flex items-center justify-center">
+                                    <span class="text-muted-foreground text-sm text-center" data-mock="true">
+                                        AdSense Sidebar<br/>(NEXT_PUBLIC_ADSENSE_SLOT_2)
+                                    </span>
+                                </div>
+                            </div>
+                            <!-- @END_COMPONENT: AdSlot -->
+
+                            <!-- Tips Card -->
+                            <div class="bg-card border border-border rounded-lg p-6">
+                                <h3 class="font-medium text-foreground mb-4 flex items-center">
+                                    <i class="fas fa-lightbulb text-primary mr-2"></i>
+                                    Pro Tips
+                                </h3>
+                                <ul class="space-y-3 text-sm text-muted-foreground">
+                                    <li class="flex items-start space-x-2">
+                                        <span class="text-primary">•</span>
+                                        <span>Be specific about your desired output format</span>
+                                    </li>
+                                    <li class="flex items-start space-x-2">
+                                        <span class="text-primary">•</span>
+                                        <span>Include context and constraints for better results</span>
+                                    </li>
+                                    <li class="flex items-start space-x-2">
+                                        <span class="text-primary">•</span>
+                                        <span>Define a clear role or persona for the AI</span>
+                                    </li>
+                                    <li class="flex items-start space-x-2">
+                                        <span class="text-primary">•</span>
+                                        <span>Break complex tasks into step-by-step instructions</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- @END_COMPONENT: Hero Section -->
+
+        <!-- FAQ Section -->
+        <section id="faq" class="py-16 bg-muted/30">
+            <div class="container mx-auto px-4 max-w-4xl">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-semibold text-foreground mb-4">Prompt Formatter FAQ</h2>
+                    <p class="text-muted-foreground">Common questions about our free prompt formatting and optimization tool</p>
+                </div>
+
+                <div class="space-y-4">
+                    <!-- @MAP: faqItems.map(item => ( -->
+                    <div class="bg-card border border-border rounded-lg">
+                        <button 
+                            data-event="click:toggleFAQ"
+                            data-implementation="Should expand/collapse FAQ item"
+                            class="w-full text-left px-6 py-4 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded-lg"
+                        >
+                            <div class="flex items-center justify-between">
+                                <h3 class="font-medium text-foreground">What is a prompt formatter?</h3>
+                                <i class="fas fa-chevron-down text-muted-foreground"></i>
+                            </div>
+                        </button>
+                        <div class="px-6 pb-4 text-muted-foreground">
+                            <p class="text-sm leading-relaxed">
+                                A prompt formatter is a tool that transforms messy, unclear prompts into well-structured, effective instructions for AI models like ChatGPT and Gemini. It helps improve prompt clarity, adds proper context, and ensures you get better responses from AI assistants.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="bg-card border border-border rounded-lg">
+                        <button 
+                            data-event="click:toggleFAQ"
+                            class="w-full text-left px-6 py-4 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded-lg"
+                        >
+                            <div class="flex items-center justify-between">
+                                <h3 class="font-medium text-foreground">How does this prompt expander work?</h3>
+                                <i class="fas fa-chevron-down text-muted-foreground"></i>
+                            </div>
+                        </button>
+                        <div class="px-6 pb-4 text-muted-foreground">
+                            <p class="text-sm leading-relaxed">
+                                Our prompt expander analyzes your input and adds context, structure, and clarity to create optimized prompts. It uses advanced AI to identify missing elements, add proper formatting, and suggest improvements that lead to significantly better AI responses.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="bg-card border border-border rounded-lg">
+                        <button 
+                            data-event="click:toggleFAQ"
+                            class="w-full text-left px-6 py-4 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded-lg"
+                        >
+                            <div class="flex items-center justify-between">
+                                <h3 class="font-medium text-foreground">Is this prompt optimizer free?</h3>
+                                <i class="fas fa-chevron-down text-muted-foreground"></i>
+                            </div>
+                        </button>
+                        <div class="px-6 pb-4 text-muted-foreground">
+                            <p class="text-sm leading-relaxed">
+                                Yes! Our prompt optimizer is completely free with no usage limits, sign-up requirements, or paywalls. We believe everyone should have access to professional prompt formatting tools to improve their AI interactions.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="bg-card border border-border rounded-lg">
+                        <button 
+                            data-event="click:toggleFAQ"
+                            class="w-full text-left px-6 py-4 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded-lg"
+                        >
+                            <div class="flex items-center justify-between">
+                                <h3 class="font-medium text-foreground">Which AI models work with formatted prompts?</h3>
+                                <i class="fas fa-chevron-down text-muted-foreground"></i>
+                            </div>
+                        </button>
+                        <div class="px-6 pb-4 text-muted-foreground">
+                            <p class="text-sm leading-relaxed">
+                                Our formatted prompts work with all major AI models including ChatGPT (GPT-3.5, GPT-4), Google Gemini, Claude, and other language models. The structured format we create follows best practices that are universally effective across platforms.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="bg-card border border-border rounded-lg">
+                        <button 
+                            data-event="click:toggleFAQ"
+                            class="w-full text-left px-6 py-4 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded-lg"
+                        >
+                            <div class="flex items-center justify-between">
+                                <h3 class="font-medium text-foreground">Can I use this for commercial purposes?</h3>
+                                <i class="fas fa-chevron-down text-muted-foreground"></i>
+                            </div>
+                        </button>
+                        <div class="px-6 pb-4 text-muted-foreground">
+                            <p class="text-sm leading-relaxed">
+                                Absolutely! There are no restrictions on using our prompt formatter for commercial purposes. Many businesses, freelancers, and agencies use our tool to create better prompts for client work, content creation, and internal processes.
+                            </p>
+                        </div>
+                    </div>
+                    <!-- @END_MAP )) -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Showcase -->
+        <section class="py-16">
+            <div class="container mx-auto px-4 max-w-6xl">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-semibold text-foreground mb-4">Why Choose Our Prompt Formatter?</h2>
+                    <p class="text-muted-foreground text-lg">Professional prompt engineering made simple and accessible</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="bg-card border border-border rounded-lg p-6 text-center">
+                        <div class="w-12 h-12 bg-chart-1/10 text-chart-1 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-rocket text-lg"></i>
+                        </div>
+                        <h3 class="font-medium text-foreground mb-2">Instant Results</h3>
+                        <p class="text-sm text-muted-foreground">Get optimized prompts in seconds, not hours of trial and error</p>
+                    </div>
+                    <div class="bg-card border border-border rounded-lg p-6 text-center">
+                        <div class="w-12 h-12 bg-chart-2/10 text-chart-2 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-shield-alt text-lg"></i>
+                        </div>
+                        <h3 class="font-medium text-foreground mb-2">Privacy First</h3>
+                        <p class="text-sm text-muted-foreground">Your prompts are processed securely and never stored or shared</p>
+                    </div>
+                    <div class="bg-card border border-border rounded-lg p-6 text-center">
+                        <div class="w-12 h-12 bg-chart-3/10 text-chart-3 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-mobile-alt text-lg"></i>
+                        </div>
+                        <h3 class="font-medium text-foreground mb-2">Mobile Optimized</h3>
+                        <p class="text-sm text-muted-foreground">Works perfectly on any device - desktop, tablet, or mobile</p>
+                    </div>
+                    <div class="bg-card border border-border rounded-lg p-6 text-center">
+                        <div class="w-12 h-12 bg-chart-4/10 text-chart-4 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-infinity text-lg"></i>
+                        </div>
+                        <h3 class="font-medium text-foreground mb-2">No Limits</h3>
+                        <p class="text-sm text-muted-foreground">Format unlimited prompts with no usage caps or restrictions</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="py-16 gradient-bg">
+            <div class="container mx-auto px-4 max-w-4xl text-center">
+                <h2 class="text-3xl font-semibold text-primary-foreground mb-4">
+                    Ready to Transform Your Prompts?
+                </h2>
+                <p class="text-xl text-primary-foreground/90 mb-8">
+                    Join thousands of users who create better AI prompts every day
+                </p>
+                <button 
+                    data-event="click:scrollToFormatter"
+                    data-implementation="Should smooth scroll to formatter section"
+                    class="bg-background text-foreground px-8 py-3 rounded-lg font-medium hover:bg-background/90 transition-colors shadow-lg"
+                >
+                    Start Formatting Now
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-card border-t border-border py-12">
+        <div class="container mx-auto px-4 max-w-6xl">
+            <div class="grid md:grid-cols-3 gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <i class="fas fa-magic text-primary text-xl"></i>
+                        <span class="text-lg font-semibold text-foreground">PromptFmt</span>
+                    </div>
+                    <p class="text-muted-foreground text-sm leading-relaxed">
+                        The ultimate free prompt formatter and expander for ChatGPT, Gemini, and all AI models. 
+                        Transform messy prompts into professional, structured instructions.
+                    </p>
+                </div>
+                
+                <div>
+                    <h3 class="font-medium text-foreground mb-4">Quick Links</h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#format" class="text-muted-foreground hover:text-primary transition-colors">Prompt Formatter Tool</a></li>
+                        <li><a href="#expand" class="text-muted-foreground hover:text-primary transition-colors">Prompt Expander Online</a></li>
+                        <li><a href="#optimize" class="text-muted-foreground hover:text-primary transition-colors">AI Prompt Optimizer</a></li>
+                        <li><a href="#faq" class="text-muted-foreground hover:text-primary transition-colors">Prompt Formatter FAQ</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="font-medium text-foreground mb-4">Support</h3>
+                    <div class="space-y-3">
+                        <a 
+                            href="https://ko-fi.com/promptfmt" 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            class="inline-flex items-center space-x-2 bg-chart-2 text-primary-foreground px-4 py-2 rounded-lg hover:bg-chart-2/90 transition-colors"
+                        >
+                            <span>❤️</span>
+                            <span class="text-sm font-medium">Buy me a coffee</span>
+                        </a>
+                        <p class="text-xs text-muted-foreground">
+                            Help keep this tool free for everyone
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <hr class="border-border my-8">
+            
+            <div class="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
+                <p class="text-muted-foreground text-sm">
+                    © 2025 PromptFmt – built with Gemini
+                </p>
+                <div class="flex items-center space-x-6 text-sm text-muted-foreground">
+                    <a href="/privacy" class="hover:text-primary transition-colors">Privacy</a>
+                    <a href="/terms" class="hover:text-primary transition-colors">Terms</a>
+                    <a href="mailto:support@promptfmt.com" class="hover:text-primary transition-colors">Contact</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // TODO: Implement business logic, API calls, and state management
+        (function() {
+            // Example button functionality
+            const tryExampleBtn = document.querySelector('[data-event="click:loadExample"]');
+            const originalTextarea = document.getElementById('original-prompt');
+            
+            if (tryExampleBtn && originalTextarea) {
+                tryExampleBtn.addEventListener('click', function() {
+                    const examplePrompt = "help me write better emails for my business i want them to be more professional and get better responses from clients also make them shorter and easier to read on mobile devices and include some templates for common situations like follow ups and introductions this prompt formatter should help structure this better";
+                    originalTextarea.value = examplePrompt;
+                });
+            }
+
+            // Copy to clipboard functionality  
+            const copyBtn = document.querySelector('[data-event="click:copyToClipboard"]');
+            if (copyBtn) {
+                copyBtn.addEventListener('click', function() {
+                    // TODO: Implement actual copy functionality from formatted result
+                    // navigator.clipboard.writeText(formattedText)
+                    this.innerHTML = '<i class="fas fa-check mr-1"></i>Copied!';
+                    setTimeout(() => {
+                        this.innerHTML = '<i class="fas fa-copy mr-1"></i>Copy';
+                    }, 2000);
+                });
+            }
+
+            // FAQ Toggle functionality
+            const faqButtons = document.querySelectorAll('[data-event="click:toggleFAQ"]');
+            faqButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const content = this.nextElementSibling;
+                    const icon = this.querySelector('i');
+                    
+                    if (content.style.display === 'none' || !content.style.display) {
+                        content.style.display = 'block';
+                        icon.classList.remove('fa-chevron-down');
+                        icon.classList.add('fa-chevron-up');
+                    } else {
+                        content.style.display = 'none';
+                        icon.classList.remove('fa-chevron-up');
+                        icon.classList.add('fa-chevron-down');
+                    }
+                });
+            });
+
+            // Format prompt functionality
+            const formatBtn = document.querySelector('[data-event="click:handleFormat"]');
+            if (formatBtn) {
+                formatBtn.addEventListener('click', function() {
+                    // TODO: Implement API call to /api/format
+                    // TODO: Show loading state
+                    // TODO: Display formatted result
+                    console.log('Format prompt functionality to be implemented');
+                });
+            }
+
+            // Smooth scrolling for anchor links
+            const anchorLinks = document.querySelectorAll('a[href^="#"]');
+            anchorLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href').substring(1);
+                    const targetElement = document.getElementById(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        })();
+    </script>
+
+    <!-- AdSense Script (to be replaced with actual client ID) -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+</body>
+</html>

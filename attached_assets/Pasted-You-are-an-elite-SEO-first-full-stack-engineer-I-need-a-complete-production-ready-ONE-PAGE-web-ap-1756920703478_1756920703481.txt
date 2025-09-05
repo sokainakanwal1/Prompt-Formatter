@@ -1,0 +1,101 @@
+You are an elite SEO-first full-stack engineer.
+I need a complete, production-ready ONE-PAGE web app built on Replit with the following stack and specs. Do NOT skip any step; give me every file, command, and environment variable I need to copy-paste.
+Tech stack
+Framework: Next.js 14 (App Router)
+Styling: Tailwind CSS (already included in Replit template)
+AI model: Google Gemini 1.5 Flash (google/generative-ai npm pkg)
+Language: TypeScript wherever possible
+SEO objective
+Rank top-3 for these low-KD keywords (Ahrefs Aug-25):
+“prompt formatter” (1.9 K vol, KD 11) – primary
+“format prompt for chatgpt” (1.1 K vol, KD 8) – secondary
+“prompt expander online” (900 vol, KD 6) – tertiary
+“ai prompt optimizer” (4.4 K vol, KD 14) – long-tail
+“prompt template generator” (1.8 K vol, KD 10) – supporting
+On-page SEO mandates (must be in code)
+a. URL slug: / (root only) – no trailing slash.
+b. <title> (62 chars, both primaries inside first 50 chars).
+c. Meta description: “Free prompt formatter and expander. Paste any messy prompt, get a structured ChatGPT or Gemini-ready version instantly. No sign-up.” (158 chars, contains exact match keywords).
+d. Canonical: https://<DOMAIN>/ (auto-filled from headers).
+e. Open-Graph: og:title uses primary keyword, og:image = /api/og (auto-generated PNG with headline).
+f. H1: “Prompt Formatter & Expander” (contains exact match).
+g. H2s (in order):
+“How to Format a Prompt for ChatGPT” (long-tail)
+“AI Prompt Optimizer in One Click” (secondary)
+“Free Prompt Template Generator” (supporting)
+h. First 100 words of body copy must include: “prompt formatter”, “format prompt”, “prompt expander”, “online”.
+i. Image alt tags: alt="prompt formatter example before after" (adds relevance).
+j. Internal anchor links (jump links) with keyword-rich ids:
+#format → href=”#format” link text “Prompt Formatter Tool”
+#expand → href=”#expand” link text “Prompt Expander Online”
+#optimize → href=”#optimize” link text “AI Prompt Optimizer”
+#faq → href=”#faq” link text “Prompt Formatter FAQ”
+k. JSON-LD FAQPage with 3 questions that each contain exact keywords:
+“What is a prompt formatter?”
+“How does this prompt expander work?”
+“Is this prompt optimizer free?”
+l. Schema + Twitter card tags.
+m. 100 Lighthouse score (use next/font, preload hero, no CLS).
+Core user story (100 % FREE – no limits, AdSense monetized)
+a. User lands on “/”.
+b. Above-the-fold: headline (H1), sub-headline (contains “format prompt for ChatGPT”), textarea, “Format Prompt” button.
+c. “Try example” button pre-fills a sample prompt that already contains the word “prompt formatter” (adds keyword density).
+d. On submit we POST to /api/format → Gemini returns polished prompt.
+e. Result in read-only textarea with “Copy” button.
+f. NO usage counter, NO paywall, NO cookies for limits.
+g. AdSense slots (responsive):
+Slot 1: horizontal display unit directly under hero (desktop & mobile).
+Slot 2: square inside sticky <aside> desktop only (hidden < md).
+h. Footer: © 2025 PromptFmt – built with Gemini – ❤️ Buy me a coffee (ko-fi link).
+File structure (same as previous prompt, plus OG image route)
+app/
+page.tsx
+layout.tsx
+globals.css
+components/
+PromptBox.tsx
+AdSlot.tsx
+api/
+format/route.ts
+og/route.ts        ← NEW dynamic OG image (uses @vercel/og)
+public/robots.txt
+lib/gemini.ts
+types/index.ts
+next.config.js
+tailwind.config.js
+vercel.json
+package.json
+.env.example (GOOGLE_GEMINI_KEY=AIzaSyCP0p2sAk_HqrJoWdLCuL2Jq-pV2wlW4Wo
+
+, NEXT_PUBLIC_ADSENSE_CLIENT=, NEXT_PUBLIC_ADSENSE_SLOT_1=, NEXT_PUBLIC_ADSENSE_SLOT_2=)
+Environment variables
+GOOGLE_GEMINI_KEY –AIzaSyCP0p2sAk_HqrJoWdLCuL2Jq-pV2wlW4Wo
+NEXT_PUBLIC_ADSENSE_CLIENT – ca-pub-XXXXXXXXXXXXXX
+NEXT_PUBLIC_ADSENSE_SLOT_1 – XXXXXXXXXX (hero)
+NEXT_PUBLIC_ADSENSE_SLOT_2 – XXXXXXXXXX (sidebar)
+Gemini prompt engineering (unchanged)
+System:
+“Act like a professional prompt formatter. You specialize in rewriting prompts for ChatGPT to make them clearer, structured, and more effective.  
+
+Your objective: Take the given raw prompt and transform it into a polished version that improves clarity, removes ambiguity, and ensures richer, more detailed outputs.  
+
+Follow these steps:  
+1. Identify the original intent of the user’s raw prompt.  
+2. Define a clear role/persona for ChatGPT that aligns with the task.  
+3. Add context and constraints that guide ChatGPT to produce higher-quality responses.  
+4. Break the instructions into a structured, step-by-step format.  
+5. Specify the desired format of the output (length, structure, style, or bullet points).  
+6. Ensure the final prompt is concise, precise, and free from ambiguity.  
+7. End the formatted prompt with: "Take a deep breath and work on this problem step-by-step."  
+
+Output: Return ONLY the upgraded prompt inside a code block, without explanations or extra text.  
+”
+Temperature = 0.3.
+Package.json (adds @vercel/og for dynamic social image)
+"dev": "next dev --port 3000"
+"build": "next build"
+"start": "next start"
+Deliver every file in full, no placeholders except AdSense IDs. After I paste into Replit I should be able to:
+npm install
+npm run dev
+→ see the page at localhost:3000

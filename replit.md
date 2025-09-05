@@ -1,8 +1,8 @@
-# Prompt Formatter
+# Project Overview
 
 ## Overview
 
-This is a full-stack web application that helps users format and enhance their prompts for ChatGPT and other AI models. The application takes raw, unstructured prompts and transforms them into clear, organized instructions that produce better AI responses. Built with React on the frontend and Express on the backend, it uses Google's Gemini AI to intelligently rewrite prompts with proper structure, context, and clarity.
+This is a full-stack web application for prompt formatting and optimization, built as an SEO-optimized single-page application. The app allows users to input messy or unclear prompts and transforms them into well-structured, effective instructions for AI models like ChatGPT and Google Gemini. The application is designed to rank highly for prompt-related keywords and provides a completely free service with no usage limits.
 
 ## User Preferences
 
@@ -11,51 +11,80 @@ Preferred communication style: Simple, everyday language.
 ## System Architecture
 
 ### Frontend Architecture
-- **Framework**: React 18 with TypeScript for type safety and modern development
+- **Framework**: React 18 with TypeScript using Vite as the build tool
 - **Routing**: Wouter for lightweight client-side routing
-- **UI Components**: Radix UI primitives with shadcn/ui component system for consistent, accessible design
-- **Styling**: Tailwind CSS with CSS variables for theming and responsive design
-- **State Management**: TanStack Query (React Query) for server state management and caching
-- **Build Tool**: Vite for fast development and optimized production builds
+- **UI Components**: Comprehensive shadcn/ui component library with Radix UI primitives
+- **Styling**: Tailwind CSS with custom design system and CSS variables for theming
+- **State Management**: TanStack Query for server state management and caching
+- **Form Handling**: React Hook Form with Zod validation
+- **SEO Optimization**: Custom SEO component for meta tags, Open Graph, and structured data
 
 ### Backend Architecture
-- **Runtime**: Node.js with Express framework for RESTful API endpoints
-- **Language**: TypeScript with ES modules for modern JavaScript features
-- **API Design**: RESTful endpoints with proper error handling and validation using Zod schemas
-- **Security**: Helmet for security headers, CORS for cross-origin requests
-- **Development**: Hot reload with tsx for TypeScript execution
+- **Runtime**: Node.js with Express.js framework
+- **Language**: TypeScript with ES modules
+- **API Design**: RESTful endpoints with structured JSON responses
+- **Development Server**: Custom Vite integration for hot module replacement
+- **Error Handling**: Centralized error middleware with structured error responses
 
 ### AI Integration
-- **Provider**: Google Gemini AI (gemini-2.5-flash model) for prompt formatting
-- **Processing**: Structured system prompts that guide the AI to enhance clarity, add context, and format prompts effectively
-- **Error Handling**: Graceful fallbacks and user-friendly error messages for API failures
+- **AI Provider**: Google Gemini 1.5 Flash via @google/genai SDK
+- **Use Case**: Prompt formatting and optimization with configurable system instructions
+- **Error Handling**: Graceful fallbacks and user-friendly error messages
+- **Configuration**: Environment variable-based API key management
 
-### Database Layer
+### Data Architecture
+- **Database**: PostgreSQL with Neon serverless hosting
 - **ORM**: Drizzle ORM for type-safe database operations
-- **Database**: PostgreSQL configured via DATABASE_URL environment variable
-- **Connection**: Neon serverless PostgreSQL for scalable cloud database
+- **Schema**: Shared TypeScript schemas between client and server using Zod
 - **Migrations**: Drizzle Kit for database schema management
-- **Schema**: User management system with username/password authentication ready
+- **Fallback**: In-memory storage implementation for development
+
+### SEO and Performance
+- **SEO Strategy**: Comprehensive on-page optimization targeting low-competition keywords
+- **Meta Management**: Dynamic SEO head component with Open Graph and Twitter Cards
+- **Image Generation**: Dynamic SVG-based Open Graph images
+- **Schema Markup**: JSON-LD structured data for FAQPage schema
+- **Performance**: Optimized for 100 Lighthouse score with preloaded assets
+
+### Monetization
+- **AdSense Integration**: Responsive ad slots with environment variable configuration
+- **Ad Placement**: Strategic placement for desktop and mobile optimization
+- **Privacy**: No user tracking or data collection beyond ad serving
 
 ### Development Tools
-- **Bundling**: ESBuild for fast server-side bundling in production
-- **Type Checking**: TypeScript compiler with strict mode enabled
-- **Code Quality**: Path aliases for clean imports, consistent file structure
-- **Environment**: Support for development and production configurations
+- **Build System**: Vite with React plugin and TypeScript support
+- **Code Quality**: TypeScript strict mode with comprehensive type checking
+- **Development Experience**: Hot module replacement and error overlay
+- **Path Aliases**: Organized import structure with @ and @shared aliases
 
-### API Endpoints
-- `POST /api/format` - Main endpoint for prompt formatting with input validation (1000 character limit)
-- Request/response types defined with proper TypeScript interfaces
-- Error handling with appropriate HTTP status codes and user-friendly messages
+## External Dependencies
 
-### Security Considerations
-- Input validation and sanitization for all user inputs
-- Rate limiting through request size constraints
-- Secure headers via Helmet middleware
-- Environment variable protection for API keys
+### Core Dependencies
+- **React Ecosystem**: React 18, React DOM, React Hook Form, TanStack Query
+- **UI Framework**: Radix UI primitives, shadcn/ui components, Lucide React icons
+- **Styling**: Tailwind CSS, class-variance-authority, clsx utilities
+- **AI Service**: Google Generative AI SDK for prompt processing
+- **Database**: Neon Database serverless PostgreSQL, Drizzle ORM
+- **Backend**: Express.js, TypeScript execution via tsx
+- **Validation**: Zod for runtime type validation
+- **Date Handling**: date-fns for date manipulation
+- **Routing**: Wouter for client-side routing
 
-### Deployment Architecture
-- **Production Build**: Static frontend assets served from Express server
-- **Asset Management**: Vite handles asset optimization and bundling
-- **Environment**: Production/development environment detection
-- **Logging**: Request/response logging for API endpoints with performance metrics
+### Development Dependencies
+- **Build Tools**: Vite, esbuild for server bundling
+- **TypeScript**: Full TypeScript support with strict configuration
+- **Database Tools**: Drizzle Kit for migrations and schema management
+- **Replit Integration**: Cartographer and runtime error modal plugins
+
+### Third-Party Services
+- **AI Processing**: Google Gemini API for prompt optimization
+- **Database Hosting**: Neon serverless PostgreSQL
+- **Ad Network**: Google AdSense for monetization
+- **Font Service**: Google Fonts (Inter font family)
+- **CDN**: FontAwesome for additional icons
+
+### Environment Configuration
+- **Database**: DATABASE_URL for Neon connection string
+- **AI Service**: GOOGLE_GEMINI_KEY or GEMINI_API_KEY for Google AI
+- **AdSense**: VITE_ADSENSE_CLIENT and slot configuration variables
+- **Development**: NODE_ENV for environment-specific behavior
