@@ -1,4 +1,4 @@
-import { CheckCircle, XCircle, Briefcase, Code, GraduationCap, PenTool, TrendingUp, Users, Rocket, Shield, Smartphone, Infinity, Wand2, Menu, X, ArrowRight, Sparkles, Lightbulb, ChevronUp, ChevronDown } from "lucide-react";
+import { CheckCircle, XCircle, Briefcase, Code, GraduationCap, PenTool, TrendingUp, Users, Rocket, Shield, Smartphone, Infinity, Wand2, Menu, X, ArrowRight, Sparkles, Lightbulb, ChevronUp, ChevronDown, Heart } from "lucide-react";
 import { useState } from "react";
 import PromptFormatter from "@/components/PromptFormatter";
 import FAQ from "@/components/FAQ";
@@ -78,13 +78,22 @@ export default function Home() {
             </div>
             
             {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center space-x-4 lg:space-x-8">
+            <div className="hidden md:flex items-center space-x-4 lg:space-x-6">
               <button onClick={() => scrollToSection('format')} className="text-muted-foreground hover:text-primary transition-all duration-200 hover:scale-105 font-medium">
                 Formatter
               </button>
               <button onClick={() => scrollToSection('optimize')} className="text-muted-foreground hover:text-primary transition-all duration-200 hover:scale-105 font-medium">
                 Features
               </button>
+              <a
+                href="https://sokaina4.gumroad.com/coffee"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white px-4 py-2 rounded-lg font-medium text-sm transition-all duration-200 hover:scale-105 shadow-lg hover:shadow-pink-500/30"
+              >
+                <Heart className="h-4 w-4 fill-current" />
+                <span>Support</span>
+              </a>
             </div>
             
             {/* Mobile Menu Button */}
@@ -110,6 +119,16 @@ export default function Home() {
                   <button onClick={() => scrollToSection('optimize')} className="w-full text-left py-2 sm:py-3 px-3 sm:px-4 rounded-lg hover:bg-accent transition-colors font-medium">
                     ⚡ Features
                   </button>
+                  <a
+                    href="https://sokaina4.gumroad.com/coffee"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="w-full inline-flex items-center justify-center gap-2 bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white py-2.5 sm:py-3 px-4 rounded-lg font-medium text-sm transition-all duration-200 hover:scale-[1.02] shadow-lg hover:shadow-pink-500/30"
+                  >
+                    <Heart className="h-4 w-4 fill-current" />
+                    <span>Support Me</span>
+                  </a>
                 </div>
               </div>
             </div>
